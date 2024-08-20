@@ -4,57 +4,107 @@ const bodyParser = require('body-parser');
 const { Telegraf } = require('telegraf');
 const packageInfo = require('./package.json');
 
+console.log("Starting application...");
+
 const app = express();
 app.use(bodyParser.json());
 
 const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
 const MONOBANK_TOKEN_SKITUS = process.env.MONOBANK_TOKEN_SKITUS;
 const MONOBANK_TOKEN_BETA = process.env.MONOBANK_TOKEN_BETA;
-const bot = new Telegraf(TELEGRAM_TOKEN);
-const chatId = process.env.CHAT_ID; // Один общий chat ID для обоих пользователей
+
+// Используйте ваш полученный Group Id
+const GROUP_CHAT_ID = process.env.CHAT_ID; 
 const PORT = process.env.PORT || 3000;
 
+console.log("Environment variables:");
+console.log("TELEGRAM_TOKEN:", TELEGRAM_TOKEN ? "Loaded" : "Not Loaded");
+console.log("MONOBANK_TOKEN_SKITUS:", MONOBANK_TOKEN_SKITUS ? "Loaded" : "Not Loaded");
+console.log("MONOBANK_TOKEN_BETA:", MONOBANK_TOKEN_BETA ? "Loaded" : "Not Loaded");
+console.log("GROUP_CHAT_ID:", GROUP_CHAT_ID ? "Loaded" : "Not Loaded");
+
+const bot = new Telegraf(TELEGRAM_TOKEN);
 let fetch;
 
 (async () => {
     fetch = (await import('node-fetch')).default;
+    console.log("Fetch module loaded.");
 
     // Webhook для Monobank для аккаунта Артура
     app.post('/monobank-webhook-artur', (req, res) => {
-        const transactions = req.body.data.statementItem;
+        console.log("Received webhook for Артур:", req.body);
 
-        transactions.forEach(transaction => {
-            const message = `
-            🏦 Новая транзакция (Артур):
-            - Сумма: ${transaction.amount / 100} ${transaction.currencyCode}
-            - Описание: ${transaction.description}
-            - Дата: ${new Date(transaction.time * 1000).toLocaleString()}
-            `;
-            bot.telegram.sendMessage(chatId, message);
-        });
+        // Проверяем тип события
+        if (req.body.type !== 'StatementItem') {
+            console.log(`Ignoring non-transaction event: ${req.body.type}`);
+            return res.sendStatus(200);
+        }
+
+        const transactions = req.body.data.statementItem;
+        const accountId = req.body.data.account;
+
+        if (!transactions) {
+            console.error("No statementItem found in webhook data for Артур:", req.body);
+            return res.sendStatus(400);
+        }
+
+        // Убедимся, что это правильный аккаунт
+        if (accountId !== 'iVnCBCn4mhoVv1JxFrQEiA') {
+            console.error(`Received webhook for Артур, but account ID does not match! Account ID: ${accountId}`);
+            return res.sendStatus(400);
+        }
+
+        // Проверяем, является ли transactions массивом или объектом
+        if (Array.isArray(transactions)) {
+            transactions.forEach(transaction => {
+                processTransaction(transaction, "Артур");
+            });
+        } else {
+            processTransaction(transactions, "Артур");
+        }
 
         res.sendStatus(200);
     });
 
     // Webhook для Monobank для аккаунта Саши
     app.post('/monobank-webhook-sasha', (req, res) => {
-        const transactions = req.body.data.statementItem;
+        console.log("Received webhook for Саша:", req.body);
 
-        transactions.forEach(transaction => {
-            const message = `
-            🏦 Новая транзакция (Саша):
-            - Сумма: ${transaction.amount / 100} ${transaction.currencyCode}
-            - Описание: ${transaction.description}
-            - Дата: ${new Date(transaction.time * 1000).toLocaleString()}
-            `;
-            bot.telegram.sendMessage(chatId, message);
-        });
+        // Проверяем тип события
+        if (req.body.type !== 'StatementItem') {
+            console.log(`Ignoring non-transaction event: ${req.body.type}`);
+            return res.sendStatus(200);
+        }
+
+        const transactions = req.body.data.statementItem;
+        const accountId = req.body.data.account;
+
+        if (!transactions) {
+            console.error("No statementItem found in webhook data for Саша:", req.body);
+            return res.sendStatus(400);
+        }
+
+        // Убедимся, что это правильный аккаунт
+        if (accountId === 'iVnCBCn4mhoVv1JxFrQEiA') {
+            console.error(`Received webhook for Саша, but it seems to be Артур's account! Account ID: ${accountId}`);
+            return res.sendStatus(400);
+        }
+
+        // Проверяем, является ли transactions массивом или объектом
+        if (Array.isArray(transactions)) {
+            transactions.forEach(transaction => {
+                processTransaction(transaction, "Саша");
+            });
+        } else {
+            processTransaction(transactions, "Саша");
+        }
 
         res.sendStatus(200);
     });
 
     // Обработчик для GET-запроса
     app.get('/', (req, res) => {
+        console.log("Received GET request on /");
         res.json({
             version: packageInfo.version,
             server: "monobank-telegram-finance"
@@ -67,15 +117,22 @@ let fetch;
     });
 
     // Запуск Telegram бота
-    bot.start((ctx) => ctx.reply('Бот запущен и готов к работе!'));
-    bot.launch();
+    bot.start((ctx) => {
+        console.log("Telegram bot started.");
+        ctx.reply('Бот запущен и готов к работе!');
+    });
+
+    bot.launch()
+        .then(() => console.log("Telegram bot launched successfully."))
+        .catch(error => console.error("Error launching Telegram bot:", error));
 
     // Регистрация Webhook в Monobank для Артура
     const setupWebhookArtur = async () => {
         const url = `https://api.monobank.ua/personal/webhook`;
-        const webhookUrl = 'https://your-server-url/monobank-webhook-artur'; // Замените на ваш URL сервера
+        const webhookUrl = 'https://boilerplate-v3.fly.dev/monobank-webhook-artur'; // Ваш URL для Артура
 
         try {
+            console.log("Registering webhook for Артур at URL:", webhookUrl);
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
@@ -98,9 +155,10 @@ let fetch;
     // Регистрация Webhook в Monobank для Саши
     const setupWebhookSasha = async () => {
         const url = `https://api.monobank.ua/personal/webhook`;
-        const webhookUrl = 'https://your-server-url/monobank-webhook-sasha'; // Замените на ваш URL сервера
+        const webhookUrl = 'https://boilerplate-v3.fly.dev/monobank-webhook-sasha'; // Ваш URL для Саши
 
         try {
+            console.log("Registering webhook for Саша at URL:", webhookUrl);
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
@@ -124,3 +182,30 @@ let fetch;
     setupWebhookArtur();
     setupWebhookSasha();
 })();
+
+// Функция для обработки транзакций
+function processTransaction(transaction, accountHolder) {
+    console.log(`Processing transaction for ${accountHolder}:`, transaction);
+
+    // Маппинг currencyCode на более читабельное название
+    const currencyMap = {
+        980: 'UAH', // Украинская гривна
+        840: 'USD', // Доллар США
+        978: 'EUR', // Евро
+        643: 'RUB', // Российский рубль
+        985: 'PLN'  // Польский злотый
+    };
+
+    // Получаем читаемое название валюты или оставляем код
+    const currency = currencyMap[transaction.currencyCode] || transaction.currencyCode;
+
+    const message = `
+    🏦 Новая транзакция (${accountHolder}):
+    - Сумма: ${transaction.amount / 100} ${currency}
+    - Описание: ${transaction.description}
+    - Дата: ${new Date(transaction.time * 1000).toLocaleString()}
+    `;
+    bot.telegram.sendMessage(GROUP_CHAT_ID, message)
+        .then(() => console.log(`Message sent for ${accountHolder}'s transaction to group.`))
+        .catch(error => console.error(`Error sending message for ${accountHolder}'s transaction to group:`, error));
+}
