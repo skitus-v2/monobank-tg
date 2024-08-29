@@ -1,0 +1,151 @@
+// ARTUR
+
+2024-08-28T09:29:39.916 app[3d8d3e3f1e7e38] fra [info] Received webhook for Артур: {
+
+2024-08-28T09:29:39.916 app[3d8d3e3f1e7e38] fra [info] type: 'StatementItem',
+
+2024-08-28T09:29:39.916 app[3d8d3e3f1e7e38] fra [info] data: {
+
+2024-08-28T09:29:39.916 app[3d8d3e3f1e7e38] fra [info] account: 'iVnCBCn4mhoVv1JxFrQEiA',
+
+2024-08-28T09:29:39.916 app[3d8d3e3f1e7e38] fra [info] statementItem: {
+
+2024-08-28T09:29:39.916 app[3d8d3e3f1e7e38] fra [info] id: 'k61W0ezF9H31S_pcPw',
+
+2024-08-28T09:29:39.916 app[3d8d3e3f1e7e38] fra [info] time: 1724837375,
+
+2024-08-28T09:29:39.916 app[3d8d3e3f1e7e38] fra [info] description: 'Пузата Хата',
+
+2024-08-28T09:29:39.916 app[3d8d3e3f1e7e38] fra [info] mcc: 5812,
+
+2024-08-28T09:29:39.916 app[3d8d3e3f1e7e38] fra [info] originalMcc: 5812,
+
+2024-08-28T09:29:39.916 app[3d8d3e3f1e7e38] fra [info] amount: -33400,
+
+2024-08-28T09:29:39.916 app[3d8d3e3f1e7e38] fra [info] operationAmount: -33400,
+
+2024-08-28T09:29:39.916 app[3d8d3e3f1e7e38] fra [info] currencyCode: 980,
+
+2024-08-28T09:29:39.916 app[3d8d3e3f1e7e38] fra [info] commissionRate: 0,
+
+2024-08-28T09:29:39.916 app[3d8d3e3f1e7e38] fra [info] cashbackAmount: 0,
+
+2024-08-28T09:29:39.916 app[3d8d3e3f1e7e38] fra [info] balance: 195370,
+
+2024-08-28T09:29:39.916 app[3d8d3e3f1e7e38] fra [info] hold: true,
+
+2024-08-28T09:29:39.916 app[3d8d3e3f1e7e38] fra [info] receiptId: 'A2M5-89PH-2X0C-3AB1'
+
+2024-08-28T09:29:39.916 app[3d8d3e3f1e7e38] fra [info] }
+
+2024-08-28T09:29:39.916 app[3d8d3e3f1e7e38] fra [info] }
+
+2024-08-28T09:29:39.916 app[3d8d3e3f1e7e38] fra [info] }
+
+2024-08-28T09:29:39.917 app[3d8d3e3f1e7e38] fra [info] Processing transaction for Артур: {
+
+2024-08-28T09:29:39.917 app[3d8d3e3f1e7e38] fra [info] id: 'k61W0ezF9H31S_pcPw',
+
+2024-08-28T09:29:39.917 app[3d8d3e3f1e7e38] fra [info] time: 1724837375,
+
+2024-08-28T09:29:39.917 app[3d8d3e3f1e7e38] fra [info] description: 'Пузата Хата',
+
+2024-08-28T09:29:39.917 app[3d8d3e3f1e7e38] fra [info] mcc: 5812,
+
+2024-08-28T09:29:39.917 app[3d8d3e3f1e7e38] fra [info] originalMcc: 5812,
+
+2024-08-28T09:29:39.917 app[3d8d3e3f1e7e38] fra [info] amount: -33400,
+
+2024-08-28T09:29:39.917 app[3d8d3e3f1e7e38] fra [info] operationAmount: -33400,
+
+2024-08-28T09:29:39.917 app[3d8d3e3f1e7e38] fra [info] currencyCode: 980,
+
+2024-08-28T09:29:39.917 app[3d8d3e3f1e7e38] fra [info] commissionRate: 0,
+
+2024-08-28T09:29:39.917 app[3d8d3e3f1e7e38] fra [info] cashbackAmount: 0,
+
+2024-08-28T09:29:39.917 app[3d8d3e3f1e7e38] fra [info] balance: 195370,
+
+2024-08-28T09:29:39.917 app[3d8d3e3f1e7e38] fra [info] hold: true,
+
+2024-08-28T09:29:39.917 app[3d8d3e3f1e7e38] fra [info] receiptId: 'A2M5-89PH-2X0C-3AB1'
+
+2024-08-28T09:29:39.917 app[3d8d3e3f1e7e38] fra [info] }
+
+
+
+// SASHA
+
+2024-08-28T11:20:41.972 proxy[5683947f692d68] fra [info] machine became reachable in 2.279190249s
+
+2024-08-28T11:20:42.071 app[5683947f692d68] fra [info] Received webhook for Саша: {
+
+2024-08-28T11:20:42.071 app[5683947f692d68] fra [info] type: 'StatementItem',
+
+2024-08-28T11:20:42.071 app[5683947f692d68] fra [info] data: {
+
+2024-08-28T11:20:42.071 app[5683947f692d68] fra [info] account: '9MNlnJzwuZOnqOSkBBKZwA',
+
+2024-08-28T11:20:42.071 app[5683947f692d68] fra [info] statementItem: {
+
+2024-08-28T11:20:42.071 app[5683947f692d68] fra [info] id: 'vTGTxrwSatrwU7XHfA',
+
+2024-08-28T11:20:42.071 app[5683947f692d68] fra [info] time: 1724844033,
+
+2024-08-28T11:20:42.071 app[5683947f692d68] fra [info] description: 'Артур Д.',
+
+2024-08-28T11:20:42.071 app[5683947f692d68] fra [info] mcc: 4829,
+
+2024-08-28T11:20:42.071 app[5683947f692d68] fra [info] originalMcc: 4829,
+
+2024-08-28T11:20:42.071 app[5683947f692d68] fra [info] amount: -100,
+
+2024-08-28T11:20:42.071 app[5683947f692d68] fra [info] operationAmount: -100,
+
+2024-08-28T11:20:42.071 app[5683947f692d68] fra [info] currencyCode: 980,
+
+2024-08-28T11:20:42.071 app[5683947f692d68] fra [info] commissionRate: 0,
+
+2024-08-28T11:20:42.071 app[5683947f692d68] fra [info] cashbackAmount: 0,
+
+2024-08-28T11:20:42.071 app[5683947f692d68] fra [info] balance: 320758,
+
+2024-08-28T11:20:42.071 app[5683947f692d68] fra [info] hold: true,
+
+2024-08-28T11:20:42.071 app[5683947f692d68] fra [info] receiptId: '1XT8-79A1-HM4M-1310'
+
+2024-08-28T11:20:42.071 app[5683947f692d68] fra [info] }
+
+2024-08-28T11:20:42.071 app[5683947f692d68] fra [info] }
+
+2024-08-28T11:20:42.071 app[5683947f692d68] fra [info] }
+
+2024-08-28T11:20:42.073 app[5683947f692d68] fra [info] Processing transaction for Саша: {
+
+2024-08-28T11:20:42.073 app[5683947f692d68] fra [info] id: 'vTGTxrwSatrwU7XHfA',
+
+2024-08-28T11:20:42.073 app[5683947f692d68] fra [info] time: 1724844033,
+
+2024-08-28T11:20:42.073 app[5683947f692d68] fra [info] description: 'Артур Д.',
+
+2024-08-28T11:20:42.073 app[5683947f692d68] fra [info] mcc: 4829,
+
+2024-08-28T11:20:42.073 app[5683947f692d68] fra [info] originalMcc: 4829,
+
+2024-08-28T11:20:42.073 app[5683947f692d68] fra [info] amount: -100,
+
+2024-08-28T11:20:42.073 app[5683947f692d68] fra [info] operationAmount: -100,
+
+2024-08-28T11:20:42.073 app[5683947f692d68] fra [info] currencyCode: 980,
+
+2024-08-28T11:20:42.073 app[5683947f692d68] fra [info] commissionRate: 0,
+
+2024-08-28T11:20:42.073 app[5683947f692d68] fra [info] cashbackAmount: 0,
+
+2024-08-28T11:20:42.073 app[5683947f692d68] fra [info] balance: 320758,
+
+2024-08-28T11:20:42.073 app[5683947f692d68] fra [info] hold: true,
+
+2024-08-28T11:20:42.073 app[5683947f692d68] fra [info] receiptId: '1XT8-79A1-HM4M-1310'
+
+2024-08-28T11:20:42.073 app[5683947f692d68] fra [info] }
