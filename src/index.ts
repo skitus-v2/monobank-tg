@@ -1,7 +1,7 @@
 import express from 'express';
 import { config } from './config/env-configuration';
 import { handleMonobankWebhook } from './controllers/webhook-monobank.controller';
-import { getMonobankData, sendMonobankData } from './services/monobank.service';
+import {  sendMonobankData } from './services/monobank.service';
 import { startBot } from './services/telegram.service';
 
 const app = express();
@@ -24,16 +24,12 @@ app.listen(config.base.port, () => {
 (async () => {
   await startBot();
 
-  await getMonobankData(config.monobank.apiUrl, config.monobank.tokenSkytus);
-
   await sendMonobankData(config.monobank.apiUrl, config.monobank.tokenSkytus, {
-    webhookUrl: 'https://boilerplate-v3.fly.dev/monobank-webhook-artur',
-    user: 'artur'
+    webhookUrl: 'https://boilerplate-v3.fly.dev/monobank-webhook-artur'
   });
 
   await sendMonobankData(config.monobank.apiUrl, config.monobank.tokenBeta, {
-    webhookUrl: 'https://boilerplate-v3.fly.dev/monobank-webhook-sasha',
-    user: 'sasha'
+    webhookUrl: 'https://boilerplate-v3.fly.dev/monobank-webhook-sasha'
   });
 })();
 
