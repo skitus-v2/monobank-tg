@@ -2,13 +2,11 @@ import dotenv from 'dotenv';
 import Joi from 'joi';
 import path from 'path';
 
-// Загрузка .env файла
 const result = dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 if (result.error) {
   throw result.error;
 }
 
-// Валидация переменных окружения
 const envSchema = Joi.object({
   NODE_ENV: Joi.string().valid('development', 'production', 'test').default('development'),
   PORT: Joi.number().default(3000),
@@ -24,7 +22,6 @@ if (error) {
   throw new Error(`Validation error in environment variables: ${error.details.map(d => d.message).join(', ')}`);
 }
 
-// Интерфейсы для конфигурации
 interface BaseConfig {
   port: number;
   nodeEnv: string;

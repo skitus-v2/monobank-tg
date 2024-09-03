@@ -5,7 +5,7 @@ export const bot = new Telegraf(config.telegram.token);
 
 export const startBot = async () => {
   bot.start((ctx: any) => {
-    ctx.reply('Бот запущен и готов к работе!');
+    ctx.reply('Bot is configured and ready for work');
   });
 
   await bot.launch();

@@ -27,12 +27,12 @@ app.listen(config.base.port, () => {
   await getMonobankData(config.monobank.apiUrl, config.monobank.tokenSkytus);
 
   await sendMonobankData(config.monobank.apiUrl, config.monobank.tokenSkytus, {
-    webhookUrl: 'https://your-domain.com/monobank-webhook-artur',
+    webhookUrl: 'https://boilerplate-v3.fly.dev/monobank-webhook-artur',
     user: 'artur'
   });
 
   await sendMonobankData(config.monobank.apiUrl, config.monobank.tokenBeta, {
-    webhookUrl: 'https://your-domain.com/monobank-webhook-sasha',
+    webhookUrl: 'https://boilerplate-v3.fly.dev/monobank-webhook-sasha',
     user: 'sasha'
   });
 })();
