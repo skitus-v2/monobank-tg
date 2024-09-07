@@ -10,6 +10,7 @@ export const handleMonobankWebhook = (accountId: string, req: Request, res: Resp
   }
 
   const transactions = data.statementItem;
+  const account = data.account;
 
   if (!transactions) {
     console.error("No statementItem found in webhook data");
@@ -17,9 +18,9 @@ export const handleMonobankWebhook = (accountId: string, req: Request, res: Resp
   }
 
   if (Array.isArray(transactions)) {
-    transactions.forEach(transaction => processTransaction(transaction, accountId));
+    transactions.forEach(transaction => processTransaction(transaction, accountId, account));
   } else {
-    processTransaction(transactions, accountId);
+    processTransaction(transactions, accountId, account);
   }
 
   res.sendStatus(200);

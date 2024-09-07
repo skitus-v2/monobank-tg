@@ -1,8 +1,9 @@
 import express from 'express';
 import { config } from './config/env-configuration';
 import { handleMonobankWebhook } from './controllers/webhook-monobank.controller';
-import {  sendMonobankData } from './services/monobank.service';
+import { sendMonobankData } from './services/monobank.service';
 import { startBot } from './services/telegram.service';
+import { AppDataSource } from './data-source';
 
 const app = express();
 app.use(express.json());
@@ -32,5 +33,11 @@ app.listen(config.base.port, () => {
     webhookUrl: 'https://boilerplate-v3.fly.dev/monobank-webhook-sasha'
   });
 })();
+
+AppDataSource.initialize()
+  .then(async () => {
+    console.log("Data Source has been initialized!");
+  })
+  .catch((error) => console.log(error));
 
 export default app;

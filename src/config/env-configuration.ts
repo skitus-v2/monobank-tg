@@ -15,6 +15,11 @@ const envSchema = Joi.object({
   MONOBANK_API_URL: Joi.string().uri().default('https://api.monobank.ua/personal/webhook'),
   MONOBANK_TOKEN_SKITUS: Joi.string().required(),
   MONOBANK_TOKEN_BETA: Joi.string().required(),
+  DB_HOST: Joi.string().required(),
+  DB_PORT: Joi.number().required(),
+  DB_PASSWORD: Joi.string().required(),
+  DB_USERNAME: Joi.string().required(),
+  DB_DATABASE: Joi.string().required(),
 }).unknown().required();
 
 const { error, value: envVars } = envSchema.validate(process.env);
@@ -38,7 +43,14 @@ interface MonobankConfig {
   tokenBeta: string;
 }
 
-// Конфигурация
+interface DatabaseConfig {
+  host: string;
+  port: number;
+  password: string;
+  username: string;
+  databaseName: string
+}
+
 export const baseConfig: BaseConfig = {
   port: envVars.PORT,
   nodeEnv: envVars.NODE_ENV,
@@ -55,8 +67,17 @@ export const monobankConfig: MonobankConfig = {
   tokenBeta: envVars.MONOBANK_TOKEN_BETA,
 };
 
+export const databaseConfig: DatabaseConfig = {
+  host: envVars.DB_HOST,
+  port: envVars.DB_PORT,
+  password: envVars.DB_PASSWORD,
+  username: envVars.DB_USERNAME,
+  databaseName: envVars.DB_DATABASE
+};
+
 export const config = {
   base: baseConfig,
   telegram: telegramConfig,
   monobank: monobankConfig,
+  database: databaseConfig
 };

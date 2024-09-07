@@ -1,6 +1,8 @@
-import { sendMessage } from '../services/telegram.service';
+import { AppDataSource } from "../data-source";
+import { Transaction } from "../entity/transaction.entity";
+import { sendMessage } from "../services/telegram.service";
 
-type Transaction = {
+type ITransaction = {
   amount: number;
   currencyCode: number;
   description: string;
@@ -15,8 +17,22 @@ const currencyMap: Record<number, string> = {
   985: 'PLN',
 };
 
-export const processTransaction = (transaction: Transaction, accountHolder: string) => {
+export const processTransaction = async (transaction: ITransaction, accountHolder: string, account: string) => {
   const currency = currencyMap[transaction.currencyCode] || transaction.currencyCode.toString();
+
+  const transactionRepo = AppDataSource.getRepository(Transaction);
+  
+  const newTransaction = transactionRepo.create({
+    amount: transaction.amount / 100,
+    currency: currency,
+    time: new Date(transaction.time),
+    description: transaction.description,
+    account: account,
+    accountHolder: accountHolder
+  });
+  
+  await transactionRepo.save(newTransaction);
+
 
   const message = `
   🏦 Новая транзакция (${accountHolder}):

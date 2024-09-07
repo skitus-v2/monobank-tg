@@ -13,7 +13,11 @@
     "start": "node dist/index.js",
     "dev": "nodemon --watch src --exec \"ts-node\" src/index.ts",
     "preinstall": "npx only-allow pnpm",
-    "init-project": "pnpm install && pnpm run build"
+    "init-project": "pnpm install && pnpm run build",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:run": "pnpm run typeorm migration:run -d ./src/data-source.ts",
+    "migration:generate": "pnpm run typeorm migration:generate -- -n",
+    "migration:revert": "pnpm run typeorm migration:revert -- -d ./src/data-source.ts"
   },
   "author": "skitus",
   "license": "ISC",
@@ -24,9 +28,11 @@
     "express": "^4.19.2",
     "joi": "^17.13.3",
     "monobankua": "^1.0.4",
+    "pg": "^8.12.0",
     "telegraf": "^4.16.3",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
+    "typeorm": "^0.3.20",
     "typescript": "^5.5.4"
   },
   "devDependencies": {
